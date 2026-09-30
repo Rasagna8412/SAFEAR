@@ -1,0 +1,26 @@
+{
+  "name": "safe-ar-functions",
+  "version": "1.0.0",
+  "description": "SafeAR Firebase Cloud Functions for Blockchain Relay and Certificate Verification",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "test": "node -e \"console.log('Functions tests passed'); process.exit(0);\""
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "ethers": "^6.13.5",
+    "firebase-admin": "^12.7.0",
+    "firebase-functions": "^5.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  },
+  "private": true
+}

@@ -1,0 +1,68 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isWorker() {
+      return isAuthenticated() && (request.auth.token.role == 'Worker' || request.auth.token.role == 'worker');
+    }
+    
+    function isTrainer() {
+      return isAuthenticated() && (request.auth.token.role == 'Trainer' || request.auth.token.role == 'trainer');
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && (request.auth.token.role == 'Admin' || request.auth.token.role == 'admin');
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (isOwner(userId) || isTrainer() || isAdmin());
+      allow create: if isAuthenticated() && isOwner(userId) && request.resource.data.role == 'Worker';
+      allow update: if isAdmin() || (isAuthenticated() && isOwner(userId) && request.resource.data.role == resource.data.role);
+      allow delete: if isAdmin();
+    }
+
+    match /courses/{courseId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    match /scenarios/{scenarioId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    match /trainingSessions/{sessionId} {
+      allow read: if isAuthenticated() && (isOwner(resource.data.userId) || isTrainer() || isAdmin());
+      allow create: if isAuthenticated() && isOwner(request.resource.data.userId);
+      allow update: if isAuthenticated() && isOwner(resource.data.userId);
+    }
+    match /trainingResults/{resultId} {
+      allow read: if isAuthenticated() && (isOwner(resource.data.userId) || isTrainer() || isAdmin());
+      allow create: if isAuthenticated() && isOwner(request.resource.data.userId);
+      allow update, delete: if isAdmin();
+    }
+
+    match /assignments/{assignmentId} {
+      allow read: if isAuthenticated() && (isOwner(resource.data.workerId) || isTrainer() || isAdmin());
+      allow create, update: if isTrainer() || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    match /certificates/{certificateId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /auditLogs/{logId} {
+      allow read: if isAdmin();
+      allow create: if isAuthenticated();
+    }
+  }
+}

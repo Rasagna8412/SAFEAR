@@ -1,0 +1,16 @@
+{
+  "name": "safe-ar-blockchain",
+  "version": "1.0.0",
+  "description": "SafeAR EVM Smart Contracts for Safety Training Certificate Verification",
+  "main": "index.js",
+  "scripts": {
+    "test": "hardhat test",
+    "compile": "hardhat compile",
+    "node": "hardhat node",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.18"
+  }
+}

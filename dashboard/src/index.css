@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  :root[data-theme="light"],
+  .light {
+    color-scheme: light;
+  }
+
+  body {
+    @apply font-sans bg-slate-950 text-slate-100 min-h-screen transition-colors duration-200;
+  }
+
+  /* Light Theme Overrides */
+  [data-theme="light"] body,
+  .light body {
+    @apply bg-slate-100 text-slate-900;
+  }
+
+  [data-theme="light"] .bg-slate-950,
+  .light .bg-slate-950 {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+  }
+
+  [data-theme="light"] .bg-slate-900,
+  .light .bg-slate-900 {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    border-color: #e2e8f0 !important;
+  }
+
+  [data-theme="light"] .bg-slate-900\/90,
+  [data-theme="light"] .bg-slate-900\/95,
+  .light .bg-slate-900\/90,
+  .light .bg-slate-900\/95 {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    color: #0f172a !important;
+    border-color: #e2e8f0 !important;
+  }
+
+  [data-theme="light"] .border-slate-800,
+  [data-theme="light"] .border-slate-700,
+  .light .border-slate-800,
+  .light .border-slate-700 {
+    border-color: #e2e8f0 !important;
+  }
+
+  [data-theme="light"] .text-white,
+  [data-theme="light"] .text-slate-100,
+  [data-theme="light"] .text-slate-200,
+  .light .text-white,
+  .light .text-slate-100,
+  .light .text-slate-200 {
+    color: #0f172a !important;
+  }
+
+  [data-theme="light"] .text-slate-300,
+  [data-theme="light"] .text-slate-400,
+  .light .text-slate-300,
+  .light .text-slate-400 {
+    color: #475569 !important;
+  }
+
+  [data-theme="light"] input,
+  [data-theme="light"] select,
+  .light input,
+  .light select {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+  }
+}
